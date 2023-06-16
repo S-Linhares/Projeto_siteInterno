@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="/css/styles_new_ee.css">
+
+<article>
+    <h1>Nova entrada de equipamento externo</h1>
+</article>
+
+<div class="formulario">
+    <form action="/add_ee" method="POST">
+        <div>
+            <label>Dispositivo: </label>
+            <input type="text" maxlength="30" class="texto" id="nome_dispositivo" name="nome_dispositivo">
+        </div>
+        <div>
+            <label>Patrimônio: </label>
+            <input type="text" maxlength="10" class="texto" id="patrimonio" name="patrimonio">
+        </div>
+        <div>
+            <label>Remetente: </label>
+            <input type="text" maxlength="20" class="texto" id="remetente" name="remetente">
+        </div>
+        <div>
+            <label>Data de entrada: </label>
+            <input type="date" id="entrada" name="entrada">
+        </div>
+        <div>
+            <label>Observações: </label>
+            <input type="text" maxlength="100" class="texto" id="obs" name="obs">
+        </div>
+        <input type="submit" value="Registrar">
+    </form>
+</div>
