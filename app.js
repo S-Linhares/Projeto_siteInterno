@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const exemplo = require('./routes/exemplo');
 const path = require('path'); // módulo para manipulação de diretorios
 const post_equip_externo = require('./models/post_equip_externo');
+const Temporario = require('./models/temporario');
 const app = express();
 
 //Configurações
@@ -29,18 +30,27 @@ const app = express();
 app.use('/', exemplo); // localhost:8081/exemplo/ ou localhost:8081/exemplo/exemplo_2
 
 app.post('/add_ee', (req, res) => {
-    post_equip_externo.create({
+    Temporario.create({
         dispositivo: req.body.nome_dispositivo,
         patrimonio: req.body.patrimonio,
         remetente: req.body.remetente,
-        data_entrada: req.body.entrada,
-        obs: req.body.obs
+        entrada: req.body.entrada,
+        obs: req.body.obs,
+        responsavel: req.body.responsavel
     }).then(() => {
         res.redirect('/equipamento_externo');
     }).catch((erro) => {
         res.send("Houve um erro: " + erro);
     });
 });
+
+app.get('/deletar/:id', function(req, res){
+    Temporario.destroy({where: {'id': req.params.id}}).then(function(){
+        res.redirect('/equipamento_externo');
+    }).catch(function(erro){
+        res.send("O campo que tentou registrar saida não existe!");
+    });
+})
 
 //Outros
 const port = 8081;

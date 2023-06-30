@@ -1,5 +1,6 @@
 const express = require('express');
 const Tecnicos = require('../models/tecnicos');
+const Temporario = require('../models/temporario');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -7,7 +8,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/equipamento_externo', (req, res) => {
-    res.render("templates/equip_externo");
+    Temporario.findAll({
+        order: [['id', 'DESC']]
+    }).then(function(temporario){
+        res.render('templates/equip_externo', {temporario: temporario});
+    });
 });
 
 router.get('/aniversarios', (req, res) => {
