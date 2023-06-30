@@ -19,6 +19,14 @@
             <input type="text" maxlength="20" class="texto" id="remetente" name="remetente">
         </div>
         <div>
+            <label>Responsável: </label>
+            <select>
+                {{#each tecnicos}}
+                    <option>{{nome}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div>
             <label>Data de entrada: </label>
             <input type="date" id="entrada" name="entrada">
         </div>

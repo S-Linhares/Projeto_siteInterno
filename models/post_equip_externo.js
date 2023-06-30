@@ -1,27 +1,33 @@
 const db = require('./db');
 
-const tabela = "equip_externo";
+const tabela = "quadro";
 
 const post_equip_externo = db.sequelize.define(tabela, {
-    cod_registro: {
+    id: {
         type: db.Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    dispositivo: {
-        type: db.Sequelize.STRING,
+    entrada: {
+        type: db.Sequelize.DATE
     },
-    patrimonio: {
-        type: db.Sequelize.STRING
-    },
-    remetente: {
-        type: db.Sequelize.STRING
-    },
-    data_entrada: {
+    saida: {
         type: db.Sequelize.DATE
     },
     obs: {
         type: db.Sequelize.TEXT
+    },
+    patrimonio_dispositivo: {
+        type: db.Sequelize.STRING,
+    },
+    id_tecnico: {
+        type: db.Sequelize.INTEGER
+    },
+    id_recebimento: {
+        type: db.Sequelize.INTEGER
+    },
+    id_despacho: {
+        type: db.Sequelize.INTEGER
     }
 }, {
     freezeTableName: true, //impede a pluralização automatica do nome da tabela
