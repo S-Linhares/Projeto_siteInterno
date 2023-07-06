@@ -2,7 +2,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
-const exemplo = require('./routes/exemplo');
+const paginas = require('./routes/paginas');
 const path = require('path'); // módulo para manipulação de diretorios
 const post_equip_externo = require('./models/post_equip_externo');
 const Temporario = require('./models/temporario');
@@ -27,7 +27,7 @@ const app = express();
     app.use(express.static(path.join(__dirname, "public")));
 
 //Rotas
-app.use('/', exemplo); // localhost:8081/exemplo/ ou localhost:8081/exemplo/exemplo_2
+app.use('/', paginas); // localhost:8081/exemplo/ ou localhost:8081/exemplo/exemplo_2
 
 app.post('/add_ee', (req, res) => {
     Temporario.create({
@@ -50,7 +50,7 @@ app.get('/deletar/:id', function(req, res){
     }).catch(function(erro){
         res.send("O campo que tentou registrar saida não existe!");
     });
-})
+});
 
 //Outros
 const port = 8081;
