@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const paginas = require('./routes/paginas');
 const path = require('path'); // módulo para manipulação de diretorios
 const post_equip_externo = require('./models/post_equip_externo');
-const Temporario = require('./models/temporario');
+const Tecnicos = require('./models/tecnicos');
 const app = express();
 
 //Configurações
@@ -30,22 +30,31 @@ const app = express();
 app.use('/', paginas); // localhost:8081/exemplo/ ou localhost:8081/exemplo/exemplo_2
 
 app.post('/add_ee', (req, res) => {
-    Temporario.create({
-        dispositivo: req.body.nome_dispositivo,
-        patrimonio: req.body.patrimonio,
-        remetente: req.body.remetente,
-        entrada: req.body.entrada,
-        obs: req.body.obs,
-        responsavel: req.body.responsavel
+    let id_t;
+
+    Tecnicos.findOne({
+        attributes: ['id'],
+        where: {
+            nome: req.body.responsavel
+        }
+    }).then(tecnicos => {
+        id_t = tecnicos.id;
+
+        return post_equip_externo.create({
+            entrada: req.body.entrada,
+            obs: req.body.obs,
+            id_tecnico: id_t
+        });
     }).then(() => {
         res.redirect('/equipamento_externo');
-    }).catch((erro) => {
-        res.send("Houve um erro: " + erro);
+    }).catch(erro => {
+        console.error('erro nas operações: ', erro);
     });
+    console.log('tecnico id: ', id_t);
 });
 
 app.get('/deletar/:id', function(req, res){
-    Temporario.destroy({where: {'id': req.params.id}}).then(function(){
+    post_equip_externo.destroy({where: {'id': req.params.id}}).then(function(){
         res.redirect('/equipamento_externo');
     }).catch(function(erro){
         res.send("O campo que tentou registrar saida não existe!");
