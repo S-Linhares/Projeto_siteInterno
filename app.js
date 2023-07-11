@@ -50,7 +50,6 @@ app.post('/add_ee', (req, res) => {
     }).catch(erro => {
         console.error('erro nas operações: ', erro);
     });
-    console.log('tecnico id: ', id_t);
 });
 
 app.get('/deletar/:id', function(req, res){
