@@ -6,6 +6,7 @@ const paginas = require('./routes/paginas');
 const path = require('path'); // módulo para manipulação de diretorios
 const post_equip_externo = require('./models/post_equip_externo');
 const Tecnicos = require('./models/tecnicos');
+const Dispositivos = require('./models/dispositivo');
 const app = express();
 
 //Configurações
@@ -30,26 +31,50 @@ const app = express();
 app.use('/', paginas); // localhost:8081/exemplo/ ou localhost:8081/exemplo/exemplo_2
 
 app.post('/add_ee', (req, res) => {
-    let id_t;
+    async function add_ee(){
+        try{
+            let tecnico = await Tecnicos.findOne({
+                attributes: ['id'],
+                where: {
+                    nome: req.body.responsavel
+                }
+            });
+    
+            let id_t = tecnico.id;
 
-    Tecnicos.findOne({
-        attributes: ['id'],
-        where: {
-            nome: req.body.responsavel
+            let patri = await Dispositivos.findOne({
+                attributes: ['patrimonio'],
+                where: {
+                    patrimonio: req.body.patrimonio
+                }
+            })
+            
+            if(patri !== null){
+                console.log('existente!');
+            }else{
+                await Dispositivos.create({
+                    patrimonio: req.body.patrimonio,
+                    nome: req.body.nome_dispositivo
+                });
+                console.log('Não existente... criado!');
+            }
+    
+            await post_equip_externo.create({
+                entrada: req.body.entrada,
+                obs: req.body.obs,
+                patrimonio_dispositivo: req.body.patrimonio,
+                id_tecnico: id_t
+            });
+    
+            console.log('Operações concluidas!');
+        }catch(erro){
+            console.log('erro: ', erro);
         }
-    }).then(tecnicos => {
-        id_t = tecnicos.id;
+    }
 
-        return post_equip_externo.create({
-            entrada: req.body.entrada,
-            obs: req.body.obs,
-            id_tecnico: id_t
-        });
-    }).then(() => {
-        res.redirect('/equipamento_externo');
-    }).catch(erro => {
-        console.error('erro nas operações: ', erro);
-    });
+    add_ee();
+
+    res.redirect('/equipamento_externo');
 });
 
 app.get('/deletar/:id', function(req, res){

@@ -2,7 +2,7 @@ const db = require('./db');
 
 const tabela = "dispositivo";
 
-const dispositivo = db.sequelize.define(tabela, {
+const dispositivos = db.sequelize.define(tabela, {
     patrimonio: {
         type: db.Sequelize.STRING,
         primaryKey: true,
@@ -27,4 +27,4 @@ const dispositivo = db.sequelize.define(tabela, {
     timestamps: false //Desabilita a criação automática das colunas "createdAt" e "updatedAt"
 });
 
-module.exports = dispositivo
+module.exports = dispositivos
