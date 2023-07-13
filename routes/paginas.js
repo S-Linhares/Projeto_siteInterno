@@ -1,6 +1,6 @@
 const express = require('express');
 const Tecnicos = require('../models/tecnicos');
-const Temporario = require('../models/temporario');
+const Dispositivo = require('../models/dispositivo');
 const Post_equip_externo = require('../models/post_equip_externo');
 const router = express.Router();
 
@@ -10,7 +10,22 @@ router.get('/', (req, res) => {
 
 router.get('/equipamento_externo', (req, res) => {
     Post_equip_externo.findAll({
-        order: [['id', 'DESC']]
+        order: [['id', 'DESC']],
+        where: {
+            saida: null
+        },
+        include: [
+            {
+                model: Tecnicos,
+                required: true,
+                attributes: ['nome']
+            },
+            {
+                model: Dispositivo,
+                required: true,
+                attributes: ['nome']
+            }
+        ]
     }).then(function(quadro){
         res.render('templates/equip_externo', {quadro: quadro});
     });
