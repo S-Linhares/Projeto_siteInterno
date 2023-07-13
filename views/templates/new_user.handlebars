@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/css/styles_new_user.css">
+<link rel="stylesheet" href="/css/styles_new_ee.css">
+
+<article>
+    <h1>Registro de um novo usuário da rede</h1>
+</article>
+
+<div class="formulario">
+    <form method="POST">
+        <div>
+            <label>Nome: </label>
+            <input type="text" maxlength="50" class="texto" id="nome_user" name="nome_user">
+        </div>
+
+        <div>
+            <label>Cargo/Setor: </label>
+            <input type="text" maxlenght="30" class="texto" id="cargo_setor" name="cargo_setor">
+        </div> 
+
+        <div>
+            <label>Matricula/Cpf: </label>
+            <input type="text" maxlength="15" class="texto" id="mat_cpf" name="mat_cpf">
+        </div>    
+
+        <div>
+            <label>Tipo de usuário: </label>
+            <select name="tipo_user" id="tipo_user">
+                <option>Inspetor</option>
+                <option>Terceirizado</option>
+            </select>
+        </div>   
+
+        <input type="submit" value="Criar">    
+    </form>
+</div>

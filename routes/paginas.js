@@ -2,6 +2,8 @@ const express = require('express');
 const Tecnicos = require('../models/tecnicos');
 const Dispositivo = require('../models/dispositivo');
 const Post_equip_externo = require('../models/post_equip_externo');
+const Inspetores = require('../models/inspetores');
+const Terceirizados = require('../models/terceirizados');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -55,12 +57,39 @@ router.get('/usuarios', (req, res) => {
     res.render("templates/usuario");
 });
 
+router.get('/novo_user', (req, res) => {
+    res.render("templates/new_user");
+});
+
 router.get('/novo_ee', (req, res) => {
-    Tecnicos.findAll({
+    async function novo_ee(){
+        try{
+            let tecnicos = await Tecnicos.findAll({
+                order: [['id', 'DESC']]
+            });
+
+            let inspetores = await Inspetores.findAll({
+                order: [['nome', 'ASC']]
+            });
+
+            let terceirizados = await Terceirizados.findAll({
+                order: [['nome', 'ASC']]
+            });
+
+            res.render('templates/new_ee', {tecnicos: tecnicos, inspetores: inspetores, terceirizados: terceirizados});
+            
+        }catch(erro){
+            console.log('erro: ', erro);
+        }
+    }
+
+    novo_ee();
+
+    /*Tecnicos.findAll({
         order: [['id', 'DESC']]
     }).then(function(tecnicos){
         res.render('templates/new_ee', {tecnicos: tecnicos});
-    });
+    });*/
 });
 
 /*router.get('/exemplo_2', (req, res) => {

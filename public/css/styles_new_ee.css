@@ -9,3 +9,26 @@
 .texto {
     width: 250px;
 }
+
+.remetente {
+    align-items: center;
+    padding: 2px;
+}
+
+.new_us{
+    display: inline-flex;
+    border: none;
+    background-color: white;
+}
+
+.new_us:hover {
+    cursor: pointer;
+}
+
+.icone_new_us {
+    background-image: url(../img/plus32.png);
+    background-size: cover;
+    margin-left: 4px;
+    width: 24px;
+    height: 24px;
+}

@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/styles_new_ee.css">
+<script src="/js/redirecionamentos.js"></script>
 
 <article>
     <h1>Nova entrada de equipamento externo</h1>
@@ -16,7 +17,19 @@
         </div>
         <div>
             <label>Remetente: </label>
-            <input type="text" maxlength="20" class="texto" id="remetente" name="remetente">
+            <select name="inspetor" id="inspetor" class="remetente">
+                {{#each inspetores}}
+                    <option>{{nome}}</option>
+                {{/each}}
+            </select>
+            <select name="terceirizado" id="terceirizado" class="remetente">
+                {{#each terceirizados}}
+                    <option>{{nome}}</option>
+                {{/each}}
+            </select>
+            <button type="button" class="new_us" onclick="new_user()">
+                <span class="icone_new_us"></span>
+            </button>
         </div>
         <div>
             <label>Responsável: </label>
