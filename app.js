@@ -7,6 +7,9 @@ const path = require('path'); // módulo para manipulação de diretorios
 const post_equip_externo = require('./models/post_equip_externo');
 const Tecnicos = require('./models/tecnicos');
 const Dispositivos = require('./models/dispositivo');
+const Inspetores = require('./models/inspetores');
+const Terceirizados = require('./models/terceirizados');
+const Recebimento = require('./models/recebimento');
 const app = express();
 
 //Configurações
@@ -83,6 +86,35 @@ app.get('/deletar/:id', function(req, res){
     }).catch(function(erro){
         res.send("O campo que tentou registrar saida não existe!");
     });
+});
+
+app.post('/add_user', (req, res) => {
+    async function add_user(){
+        try{
+            console.log('recebido do body: ', req.body.tipo_user);
+            if(req.body.tipo_user == "inspetor"){
+                await Inspetores.create({
+                    matricula: req.body.mat_cpf,
+                    nome: req.body.nome_user,
+                    setor: req.body.cargo_setor
+                });
+            }else if(req.body.tipo_user == "terceirizado"){
+                await Terceirizados.create({
+                    cpf: req.body.mat_cpf,
+                    nome: req.body.nome_user,
+                    cargo: req.body.cargo_setor
+                });
+            }else{
+                console.log('erro, recebido do body: ', req.body.tipo_user);
+            }
+        }catch(erro){
+            console.log('erro: ', erro);
+        }
+    }
+
+    add_user();
+
+    res.redirect('/novo_ee');
 });
 
 //Outros

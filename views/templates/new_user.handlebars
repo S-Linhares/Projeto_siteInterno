@@ -6,7 +6,7 @@
 </article>
 
 <div class="formulario">
-    <form method="POST">
+    <form method="POST" action="/add_user">
         <div>
             <label>Nome: </label>
             <input type="text" maxlength="50" class="texto" id="nome_user" name="nome_user">
@@ -25,8 +25,8 @@
         <div>
             <label>Tipo de usuário: </label>
             <select name="tipo_user" id="tipo_user">
-                <option>Inspetor</option>
-                <option>Terceirizado</option>
+                <option value="inspetor">Inspetor</option>
+                <option value="terceirizado">Terceirizado</option>
             </select>
         </div>   
 
