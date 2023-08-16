@@ -19,12 +19,12 @@ router.get('/equipamento_externo', (req, res) => {
         include: [
             {
                 model: Tecnicos,
-                required: true,
+                required: false, //false vai forçar uma left join. true vai forçar um inner join
                 attributes: ['nome']
             },
             {
                 model: Dispositivo,
-                required: true,
+                required: false,
                 attributes: ['nome']
             }
         ]
