@@ -80,13 +80,13 @@ app.post('/add_ee', (req, res) => {
     res.redirect('/equipamento_externo');
 });
 
-app.get('/deletar/:id', function(req, res){
+/*app.get('/deletar/:id', function(req, res){
     post_equip_externo.destroy({where: {'id': req.params.id}}).then(function(){
         res.redirect('/equipamento_externo');
     }).catch(function(erro){
         res.send("O campo que tentou registrar saida não existe!");
     });
-});
+}); */
 
 app.post('/add_user', (req, res) => {
     async function add_user(){

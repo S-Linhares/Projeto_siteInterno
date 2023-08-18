@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/css/styles_exit_ee.css">
+
+<article>
+    <h1>Registro de saida de equipamento</h1>
+</article>
+
+<div class="formulario">
+    <form method="POST" action="/add_user">
+        <div>
+            <label>Nome: </label>
+            <input type="text" maxlength="50" class="texto" id="nome_user" name="nome_user">
+        </div>
+
+        <div>
+            <label>Cargo/Setor: </label>
+            <input type="text" maxlenght="30" class="texto" id="cargo_setor" name="cargo_setor">
+        </div> 
+
+        <div>
+            <label>Matricula/Cpf: </label>
+            <input type="text" maxlength="15" class="texto" id="mat_cpf" name="mat_cpf">
+        </div>    
+
+        <div>
+            <label>Tipo de usuário: </label>
+            <select name="tipo_user" id="tipo_user">
+                <option value="inspetor">Inspetor</option>
+                <option value="terceirizado">Terceirizado</option>
+            </select>
+        </div>   
+
+        <input type="submit" value="Criar">    
+    </form>
+</div>

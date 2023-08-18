@@ -92,6 +92,10 @@ router.get('/novo_ee', (req, res) => {
     });*/
 });
 
+router.get('/saida_ee/:id', (req, res) => {
+    res.render('templates/exit_ee');
+});
+
 /*router.get('/exemplo_2', (req, res) => {
     res.send("Página de exemplos 2!");
 }); */
