@@ -1,34 +1,46 @@
 <link rel="stylesheet" href="/css/styles_exit_ee.css">
+<link rel="stylesheet" href="/css/styles_new_ee.css">
 
 <article>
     <h1>Registro de saida de equipamento</h1>
 </article>
 
 <div class="formulario">
-    <form method="POST" action="/add_user">
+    <form action="/att_ee" method="POST">
         <div>
-            <label>Nome: </label>
-            <input type="text" maxlength="50" class="texto" id="nome_user" name="nome_user">
-        </div>
-
-        <div>
-            <label>Cargo/Setor: </label>
-            <input type="text" maxlenght="30" class="texto" id="cargo_setor" name="cargo_setor">
-        </div> 
-
-        <div>
-            <label>Matricula/Cpf: </label>
-            <input type="text" maxlength="15" class="texto" id="mat_cpf" name="mat_cpf">
-        </div>    
-
-        <div>
-            <label>Tipo de usuário: </label>
-            <select name="tipo_user" id="tipo_user">
-                <option value="inspetor">Inspetor</option>
-                <option value="terceirizado">Terceirizado</option>
+            <label>Remetente: </label>
+            <select name="inspetor" id="inspetor" class="remetente">
+                {{#each inspetores}}
+                    <option>{{nome}}</option>
+                {{/each}}
             </select>
-        </div>   
-
-        <input type="submit" value="Criar">    
+            <select name="terceirizado" id="terceirizado" class="remetente">
+                {{#each terceirizados}}
+                    <option>{{nome}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div>
+            <label>Destinatário: </label>
+            <select name="inspetor_d" id="inspetor_d" class="remetente">
+                {{#each inspetores}}
+                    <option>{{nome}}</option>
+                {{/each}}
+            </select>
+            <select name="terceirizado_d" id="terceirizado_d" class="remetente">
+                {{#each terceirizados}}
+                    <option>{{nome}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div>
+            <label>Data de saida: </label>
+            <input type="date" id="saida" name="saida">
+        </div>
+        <div>
+            <label for="obs" id="obs_l">Observações: </label>
+            <textarea maxlength="100" id="obs" name="obs" cols="25" rows="5">{{#each quadro}}{{obs}}{{/each}}</textarea>
+        </div>
+        <input type="submit" value="Registrar">
     </form>
 </div>

@@ -117,6 +117,20 @@ app.post('/add_user', (req, res) => {
     res.redirect('/novo_ee');
 });
 
+app.post('/att_ee', (req, res) => {
+    async function att_ee(){
+        try{
+            
+        }catch(erro){
+            console.log('erro: ', erro);
+        }
+    }
+
+    att_ee();
+
+    res.redirect('/equipamento_externo');
+});
+
 //Outros
 const port = 8081;
 app.listen(port, () => {
