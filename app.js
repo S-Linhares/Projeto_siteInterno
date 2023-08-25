@@ -10,6 +10,7 @@ const Dispositivos = require('./models/dispositivo');
 const Inspetores = require('./models/inspetores');
 const Terceirizados = require('./models/terceirizados');
 const Recebimento = require('./models/recebimento');
+const Despacho = require('./models/despacho');
 const app = express();
 
 //Configurações
@@ -35,6 +36,7 @@ app.use('/', paginas); // localhost:8081/exemplo/ ou localhost:8081/exemplo/exem
 
 app.post('/add_ee', (req, res) => {
     async function add_ee(){
+        let entry = null;
         try{
             let tecnico = await Tecnicos.findOne({
                 attributes: ['id'],
@@ -50,7 +52,31 @@ app.post('/add_ee', (req, res) => {
                 where: {
                     patrimonio: req.body.patrimonio
                 }
-            })
+            });
+
+            if(req.body.inspetor !== 'inspetores' && req.body.terceirizado !== 'terceirizados'){
+                let inspetor = await Inspetores.findOne({
+                    attributes: ['matricula'],
+                    where: {
+                        nome: req.body.inspetor
+                    }
+                });
+
+                let terceirizado = await Terceirizados.findOne({
+                    attributes: ['cpf'],
+                    where: {
+                        nome: req.body.terceirizado
+                    }
+                });
+
+                let mtr_i = inspetor.matricula;
+                let cpf_t = terceirizado.cpf;
+
+                entry = await Recebimento.create({
+                    remetente_matricula: mtr_i,
+                    remetente_cpf: cpf_t
+                });
+            }
             
             if(patri !== null){
                 console.log('existente!');
@@ -61,13 +87,23 @@ app.post('/add_ee', (req, res) => {
                 });
                 console.log('Não existente... criado!');
             }
-    
-            await post_equip_externo.create({
-                entrada: req.body.entrada,
-                obs: req.body.obs,
-                patrimonio_dispositivo: req.body.patrimonio,
-                id_tecnico: id_t
-            });
+            
+            if(entry !== null){
+                await post_equip_externo.create({
+                    entrada: req.body.entrada,
+                    obs: req.body.obs,
+                    patrimonio_dispositivo: req.body.patrimonio,
+                    id_tecnico: id_t,
+                    id_recebimento: entry.id
+                });
+            }else{
+                await post_equip_externo.create({
+                    entrada: req.body.entrada,
+                    obs: req.body.obs,
+                    patrimonio_dispositivo: req.body.patrimonio,
+                    id_tecnico: id_t
+                });
+            }
     
             console.log('Operações concluidas!');
         }catch(erro){

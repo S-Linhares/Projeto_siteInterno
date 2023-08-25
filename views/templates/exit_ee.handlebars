@@ -5,6 +5,36 @@
     <h1>Registro de saida de equipamento</h1>
 </article>
 
+<div class="tabela">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Dispositivo</th>
+                <th scope="col">Patrimônio</th>
+                <th scope="col">Responsavel</th>
+                <th scope="col">Remetente</th>
+                <th scope="col">Entrada</th>
+                <th scope="col">Observação</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td class="borda-direita">{{quadro.dispositivo.nome}}</td>
+                <td class="borda-direita">{{quadro.patrimonio_dispositivo}}</td>
+                <td class="borda-direita">{{quadro.tecnico.nome}}</td>
+                <td class="borda-direita">{{quadro.remetente}}</td>
+                <td class="borda-direita">{{quadro.entrada}}</td>
+                <td class="borda-direita">{{quadro.obs}}</td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+
+        </tfoot>
+    </table>
+</div>
+
 <div class="formulario">
     <form action="/att_ee" method="POST">
         <div>
@@ -39,7 +69,7 @@
         </div>
         <div>
             <label for="obs" id="obs_l">Observações: </label>
-            <textarea maxlength="100" id="obs" name="obs" cols="25" rows="5">{{#each quadro}}{{obs}}{{/each}}</textarea>
+            <textarea maxlength="99" id="obs" name="obs" cols="25" rows="5">{{quadro.obs}}</textarea>
         </div>
         <input type="submit" value="Registrar">
     </form>

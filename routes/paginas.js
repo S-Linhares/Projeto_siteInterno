@@ -4,6 +4,8 @@ const Dispositivo = require('../models/dispositivo');
 const Post_equip_externo = require('../models/post_equip_externo');
 const Inspetores = require('../models/inspetores');
 const Terceirizados = require('../models/terceirizados');
+const Recebimento = require('../models/recebimento');
+const Despacho = require('../models/despacho');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -26,6 +28,22 @@ router.get('/equipamento_externo', (req, res) => {
                 model: Dispositivo,
                 required: false,
                 attributes: ['nome']
+            },
+            {
+                model: Recebimento,
+                required: false,
+                include: [
+                    {
+                        model: Inspetores,
+                        required: false,
+                        attributes: ['nome']
+                    },
+                    {
+                        model: Terceirizados,
+                        required: false,
+                        attributes: ['nome']
+                    }
+                ]
             }
         ]
     }).then(function(quadro){
@@ -104,7 +122,7 @@ router.get('/saida_ee/:id', (req, res) => {
                 order: [['nome', 'ASC']]
             });
 
-            let quadro = Post_equip_externo.findOne({
+            let quadro = await Post_equip_externo.findOne({
                 order: [['id', 'DESC']],
                 where: {
                     id: req.params.id
