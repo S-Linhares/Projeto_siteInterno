@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/css/styles_exit_ee.css">
 <link rel="stylesheet" href="/css/styles_new_ee.css">
+<script src="/js/desab_send_address.js"></script>
 
 <article>
     <h1>Registro de saida de equipamento</h1>
@@ -39,12 +40,15 @@
     <form action="/att_ee" method="POST">
         <div>
             <label>Remetente: </label>
-            <select name="inspetor" id="inspetor" class="remetente">
+            <input type="radio" id="inspetor_radio" name="remetente-op"> PRF's
+            <input type="radio" id="terceirizado_radio" name="remetente-op"> Terceirizados
+            <br>
+            <select name="inspetor" id="inspetor" class="remetente" disabled>
                 {{#each inspetores}}
                     <option>{{nome}}</option>
                 {{/each}}
             </select>
-            <select name="terceirizado" id="terceirizado" class="remetente">
+            <select name="terceirizado" id="terceirizado" class="remetente" disabled>
                 {{#each terceirizados}}
                     <option>{{nome}}</option>
                 {{/each}}
@@ -52,12 +56,15 @@
         </div>
         <div>
             <label>Destinatário: </label>
-            <select name="inspetor_d" id="inspetor_d" class="remetente">
+            <input type="radio" id="inspetor_radio_d" name="destinatario-op"> PRF's
+            <input type="radio" id="terceirizado_radio_d" name="destinatario-op"> Terceirizados
+            <br>
+            <select name="inspetor_d" id="inspetor_d" class="remetente" disabled>
                 {{#each inspetores}}
                     <option>{{nome}}</option>
                 {{/each}}
             </select>
-            <select name="terceirizado_d" id="terceirizado_d" class="remetente">
+            <select name="terceirizado_d" id="terceirizado_d" class="remetente" disabled>
                 {{#each terceirizados}}
                     <option>{{nome}}</option>
                 {{/each}}
@@ -65,7 +72,7 @@
         </div>
         <div>
             <label>Data de saida: </label>
-            <input type="date" id="saida" name="saida">
+            <input type="date" id="saida" name="saida" required>
         </div>
         <div>
             <label for="obs" id="obs_l">Observações: </label>

@@ -53,3 +53,11 @@ thead, tfoot{
 tbody > tr:nth-child(2n) {
     background-color: lightgray;
 }
+
+#terceirizado_radio {
+    margin-left: 20px;
+}
+
+#terceirizado_radio_d {
+    margin-left: 13px;
+}
