@@ -24,7 +24,7 @@
                 <td class="borda-direita">{{quadro.dispositivo.nome}}</td>
                 <td class="borda-direita">{{quadro.patrimonio_dispositivo}}</td>
                 <td class="borda-direita">{{quadro.tecnico.nome}}</td>
-                <td class="borda-direita">{{quadro.remetente}}</td>
+                <td class="borda-direita">{{quadro.recebimento.inspetore.nome}}{{quadro.recebimento.terceirizado.nome}}</td>
                 <td class="borda-direita">{{quadro.entrada}}</td>
                 <td class="borda-direita">{{quadro.obs}}</td>
             </tr>
@@ -40,8 +40,8 @@
     <form action="/att_ee" method="POST">
         <div>
             <label>Remetente: </label>
-            <input type="radio" id="inspetor_radio" name="remetente-op"> PRF's
-            <input type="radio" id="terceirizado_radio" name="remetente-op"> Terceirizados
+            <input type="radio" id="inspetor_radio" name="remetente-op" value="off"> PRF's
+            <input type="radio" id="terceirizado_radio" name="remetente-op" value="off"> Terceirizados
             <br>
             <select name="inspetor" id="inspetor" class="remetente" disabled>
                 {{#each inspetores}}
@@ -56,8 +56,8 @@
         </div>
         <div>
             <label>Destinatário: </label>
-            <input type="radio" id="inspetor_radio_d" name="destinatario-op"> PRF's
-            <input type="radio" id="terceirizado_radio_d" name="destinatario-op"> Terceirizados
+            <input type="radio" id="inspetor_radio_d" name="destinatario-op" value="off"> PRF's
+            <input type="radio" id="terceirizado_radio_d" name="destinatario-op" value="off"> Terceirizados
             <br>
             <select name="inspetor_d" id="inspetor_d" class="remetente" disabled>
                 {{#each inspetores}}
@@ -78,6 +78,7 @@
             <label for="obs" id="obs_l">Observações: </label>
             <textarea maxlength="99" id="obs" name="obs" cols="25" rows="5">{{quadro.obs}}</textarea>
         </div>
+        <input type="hidden" id="quadro_id" name="quadro_id" value="{{quadro.id}}">
         <input type="submit" value="Registrar">
     </form>
 </div>

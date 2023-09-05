@@ -130,13 +130,29 @@ router.get('/saida_ee/:id', (req, res) => {
                 include: [
                     {
                         model: Tecnicos,
-                        required: false,
+                        required: false, //'false' vai forçar uma left join. 'true' vai forçar um inner join
                         attributes: ['nome']
                     },
                     {
                         model: Dispositivo,
                         required: false,
                         attributes: ['nome']
+                    },
+                    {
+                        model: Recebimento,
+                        required: false,
+                        include: [
+                            {
+                                model: Inspetores,
+                                required: false,
+                                attributes: ['nome']
+                            },
+                            {
+                                model: Terceirizados,
+                                required: false,
+                                attributes: ['nome']
+                            }
+                        ]
                     }
                 ]
             });

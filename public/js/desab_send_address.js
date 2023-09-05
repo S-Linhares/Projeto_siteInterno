@@ -12,9 +12,13 @@ document.addEventListener("DOMContentLoaded", function(){
         if(inspetor_radio.checked){
             inspetor_selecao_remetente.disabled = false;
             terceirizado_selecao_remetente.disabled = true;
+            inspetor_radio.value = "on";
+            terceirizado_radio.value = "off";
         }else if(terceirizado_radio.checked){
             inspetor_selecao_remetente.disabled = true;
             terceirizado_selecao_remetente.disabled = false;
+            terceirizado_radio.value = "on";
+            inspetor_radio.value = "off";
         }
     }
 
@@ -22,9 +26,13 @@ document.addEventListener("DOMContentLoaded", function(){
         if(inspetor_radio_d.checked){
             inspetor_selecao_destinatario.disabled = false;
             terceirizado_selecao_destinatario.disabled = true;
+            inspetor_radio_d.value = "on";
+            terceirizado_radio_d.value = "off";
         }else if(terceirizado_radio_d.checked){
             inspetor_selecao_destinatario.disabled = true;
             terceirizado_selecao_destinatario.disabled = false;
+            terceirizado_radio_d.value = "on";
+            inspetor_radio_d.value = "off";
         }
     }
 
@@ -32,9 +40,11 @@ document.addEventListener("DOMContentLoaded", function(){
         if(inspetor_radio_d.checked){
             inspetor_radio_d.checked = false;
             inspetor_selecao_destinatario.disabled = true;
+            inspetor_radio_d.value = "off";
         }else if(terceirizado_radio_d.checked){
             terceirizado_radio_d.checked = false;
             terceirizado_selecao_destinatario.disabled = true;
+            terceirizado_radio_d.value = "off";
         }
     }
 
@@ -42,9 +52,11 @@ document.addEventListener("DOMContentLoaded", function(){
         if(inspetor_radio.checked){
             inspetor_radio.checked = false;
             inspetor_selecao_remetente.disabled = true;
+            inspetor_radio.value = "off";
         }else if(terceirizado_radio.checked){
             terceirizado_radio.checked = false;
             terceirizado_selecao_remetente.disabled = true;
+            terceirizado_radio.value = "off";
         }
     }
 

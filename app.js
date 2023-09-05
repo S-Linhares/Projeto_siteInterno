@@ -156,7 +156,78 @@ app.post('/add_user', (req, res) => {
 app.post('/att_ee', (req, res) => {
     async function att_ee(){
         try{
-            
+            let remetente_att = null;
+            let destinatario_att = null;
+
+            let quadro_saida = await post_equip_externo.findOne({
+                where: {
+                    id: req.body.quadro_id
+                }
+            });
+            //atualização de recebimento
+            if(req.body.terceirizado !== "terceirizados" || req.body.inspetor !== "inspetores"){
+                let recebimento_att = await Recebimento.findOne({
+                    where: {
+                        id: quadro_saida.id_recebimento
+                    }
+                });
+
+                if(req.body.inspetor_radio === "on"){
+                    remetente_att = await Inspetores.findOne({
+                        attributes: ['matricula'],
+                        where: {
+                            nome: req.body.inspetor
+                        }
+                    });
+    
+                    await recebimento_att.update({
+                        remetente_matricula: remetente_att.matricula
+                    });
+                }else if(req.body.terceirizado_radio === "on"){
+                    remetente_att = await Terceirizados.findOne({
+                        attributes: ['cpf'],
+                        where: {
+                            nome: req.body.terceirizado
+                        }
+                    });
+
+                    await recebimento_att.update({
+                        remetente_cpf: remetente_att.cpf
+                    });
+                }
+            }
+            //atualização de despacho
+            let despacho = null;
+
+            if(req.body.inspetor_radio_d === "on"){
+                destinatario_att = await Inspetores.findOne({
+                    attributes: ['matricula'],
+                    where: {
+                        nome: req.body.inspetor_d
+                    }
+                });
+
+                despacho = await Despacho.create({
+                    destinatario_matricula: destinatario_att.matricula
+                });
+            }else if(req.body.terceirizado_radio_d === "on"){
+                destinatario_att = await Terceirizados.findOne({
+                    attributes: ['cpf'],
+                    where: {
+                        nome: req.body.terceirizado_d
+                    }
+                });
+
+                despacho = await Despacho.create({
+                    destinatario_cpf: destinatario_att.cpf
+                });
+            }
+
+            //att data de saida e obs
+            await quadro_saida.update({
+                saida: req.body.saida,
+                obs: req.body.obs
+            });
         }catch(erro){
             console.log('erro: ', erro);
         }
