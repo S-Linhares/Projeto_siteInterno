@@ -76,6 +76,32 @@ app.post('/add_ee', (req, res) => {
                     remetente_matricula: mtr_i,
                     remetente_cpf: cpf_t
                 });
+            }else if(req.body.inspetor !== 'inspetores'){
+                let inspetor = await Inspetores.findOne({
+                    attributes: ['matricula'],
+                    where: {
+                        nome: req.body.inspetor
+                    }
+                });
+
+                let mtr_i = inspetor.matricula;
+
+                entry = await Recebimento.create({
+                    remetente_matricula: mtr_i
+                });
+            }else if(req.body.terceirizado !== 'terceirizados'){
+                let terceirizado = await Terceirizados.findOne({
+                    attributes: ['cpf'],
+                    where: {
+                        nome: req.body.terceirizado
+                    }
+                });
+
+                let cpf_t = terceirizado.cpf;
+
+                entry = await Recebimento.create({
+                    remetente_cpf: cpf_t
+                });
             }
             
             if(patri !== null){
@@ -164,6 +190,8 @@ app.post('/att_ee', (req, res) => {
                     id: req.body.quadro_id
                 }
             });
+
+            console.log("RADIO ESTÁ COM: ", req.body.inspetor_radio);
             //atualização de recebimento
             if(req.body.terceirizado !== "terceirizados" || req.body.inspetor !== "inspetores"){
                 let recebimento_att = await Recebimento.findOne({
@@ -172,7 +200,7 @@ app.post('/att_ee', (req, res) => {
                     }
                 });
 
-                if(req.body.inspetor_radio === "on"){
+                if(req.body.inspetor_radio == "on"){
                     remetente_att = await Inspetores.findOne({
                         attributes: ['matricula'],
                         where: {
@@ -183,7 +211,7 @@ app.post('/att_ee', (req, res) => {
                     await recebimento_att.update({
                         remetente_matricula: remetente_att.matricula
                     });
-                }else if(req.body.terceirizado_radio === "on"){
+                }else if(req.body.terceirizado_radio == "on"){
                     remetente_att = await Terceirizados.findOne({
                         attributes: ['cpf'],
                         where: {
@@ -199,7 +227,7 @@ app.post('/att_ee', (req, res) => {
             //atualização de despacho
             let despacho = null;
 
-            if(req.body.inspetor_radio_d === "on"){
+            if(req.body.inspetor_radio_d == "on"){
                 destinatario_att = await Inspetores.findOne({
                     attributes: ['matricula'],
                     where: {
@@ -210,7 +238,7 @@ app.post('/att_ee', (req, res) => {
                 despacho = await Despacho.create({
                     destinatario_matricula: destinatario_att.matricula
                 });
-            }else if(req.body.terceirizado_radio_d === "on"){
+            }else if(req.body.terceirizado_radio_d == "on"){
                 destinatario_att = await Terceirizados.findOne({
                     attributes: ['cpf'],
                     where: {
