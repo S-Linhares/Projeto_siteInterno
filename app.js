@@ -191,7 +191,8 @@ app.post('/att_ee', (req, res) => {
                 }
             });
 
-            console.log("RADIO ESTÁ COM: ", req.body.remetente_radio);
+            console.log("RADIO ESTÁ COM: ", req.body.inspetor_radio);
+            console.log("RADIO ESTÁ COM: ", req.body.terceirizado_radio);
             //atualização de recebimento
             if(req.body.terceirizado !== "terceirizados" || req.body.inspetor !== "inspetores"){
                 let recebimento_att = await Recebimento.findOne({
@@ -207,6 +208,12 @@ app.post('/att_ee', (req, res) => {
                             nome: req.body.inspetor
                         }
                     });
+
+                    if(recebimento_att.remetente_cpf !== null){
+                        await recebimento_att.update({
+                            remetente_cpf: null
+                        });
+                    }
     
                     await recebimento_att.update({
                         remetente_matricula: remetente_att.matricula
@@ -218,6 +225,12 @@ app.post('/att_ee', (req, res) => {
                             nome: req.body.terceirizado
                         }
                     });
+
+                    if(recebimento_att.remetente_matricula !== null){
+                        await recebimento_att.update({
+                            remetente_matricula: null
+                        });
+                    }
 
                     await recebimento_att.update({
                         remetente_cpf: remetente_att.cpf
@@ -254,7 +267,8 @@ app.post('/att_ee', (req, res) => {
             //att data de saida e obs
             await quadro_saida.update({
                 saida: req.body.saida,
-                obs: req.body.obs
+                obs: req.body.obs,
+                id_despacho: despacho.id
             });
         }catch(erro){
             console.log('erro: ', erro);
