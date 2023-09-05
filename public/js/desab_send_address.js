@@ -28,11 +28,15 @@ document.addEventListener("DOMContentLoaded", function(){
             terceirizado_selecao_destinatario.disabled = true;
             inspetor_radio_d.value = "on";
             terceirizado_radio_d.value = "off";
+            inspetor_radio_d.required = false;
+            terceirizado_radio_d.required = false;
         }else if(terceirizado_radio_d.checked){
             inspetor_selecao_destinatario.disabled = true;
             terceirizado_selecao_destinatario.disabled = false;
             terceirizado_radio_d.value = "on";
             inspetor_radio_d.value = "off";
+            inspetor_radio_d.required = false;
+            terceirizado_radio_d.required = false;
         }
     }
 
@@ -41,10 +45,12 @@ document.addEventListener("DOMContentLoaded", function(){
             inspetor_radio_d.checked = false;
             inspetor_selecao_destinatario.disabled = true;
             inspetor_radio_d.value = "off";
+            radio_requerido();
         }else if(terceirizado_radio_d.checked){
             terceirizado_radio_d.checked = false;
             terceirizado_selecao_destinatario.disabled = true;
             terceirizado_radio_d.value = "off";
+            radio_requerido();
         }
     }
 
@@ -80,6 +86,13 @@ document.addEventListener("DOMContentLoaded", function(){
         terceirizado_radio_d.checked = false;
     }
 
+    function radio_requerido(){
+        if(inspetor_radio_d.checked == false && terceirizado_radio_d.checked == false){
+            inspetor_radio_d.required = true;
+            terceirizado_radio_d.required = true;
+        }
+    }
+
     inspetor_radio.addEventListener("change", disab_remetente);
     terceirizado_radio.addEventListener("change", disab_remetente);
     inspetor_radio_d.addEventListener("change", disab_destinatario);
@@ -94,4 +107,6 @@ document.addEventListener("DOMContentLoaded", function(){
     inspetor_radio.addEventListener("click", checked_remetente_inspetor);
     terceirizado_radio_d.addEventListener("click", checked_destinatario_terceirizado);
     inspetor_radio_d.addEventListener("click", checked_destinatario_inspetor);
+
+    radio_requerido();
 });
