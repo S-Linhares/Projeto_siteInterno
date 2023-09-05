@@ -191,7 +191,7 @@ app.post('/att_ee', (req, res) => {
                 }
             });
 
-            console.log("RADIO ESTÁ COM: ", req.body.inspetor_radio);
+            console.log("RADIO ESTÁ COM: ", req.body.remetente_radio);
             //atualização de recebimento
             if(req.body.terceirizado !== "terceirizados" || req.body.inspetor !== "inspetores"){
                 let recebimento_att = await Recebimento.findOne({

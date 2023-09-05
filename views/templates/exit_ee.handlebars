@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/css/styles_exit_ee.css">
 <link rel="stylesheet" href="/css/styles_new_ee.css">
 <script src="/js/desab_send_address.js"></script>
+<script src="/js/radio_byID.js"></script>
 
 <article>
     <h1>Registro de saida de equipamento</h1>
@@ -40,8 +41,8 @@
     <form action="/att_ee" method="POST">
         <div>
             <label>Remetente: </label>
-            <input type="radio" id="inspetor_radio" name="remetente-op" value="off"> PRF's
-            <input type="radio" id="terceirizado_radio" name="remetente-op" value="off"> Terceirizados
+            <input type="radio" id="inspetor_radio" name="inspetor_radio" value="off"> PRF's
+            <input type="radio" id="terceirizado_radio" name="terceirizado_radio" value="off"> Terceirizados
             <br>
             <select name="inspetor" id="inspetor" class="remetente" disabled>
                 {{#each inspetores}}
@@ -56,8 +57,8 @@
         </div>
         <div>
             <label>Destinatário: </label>
-            <input type="radio" id="inspetor_radio_d" name="destinatario-op" value="off"> PRF's
-            <input type="radio" id="terceirizado_radio_d" name="destinatario-op" value="off"> Terceirizados
+            <input type="radio" id="inspetor_radio_d" name="inspetor_radio_d" value="off"> PRF's
+            <input type="radio" id="terceirizado_radio_d" name="terceirizado_radio_d" value="off"> Terceirizados
             <br>
             <select name="inspetor_d" id="inspetor_d" class="remetente" disabled>
                 {{#each inspetores}}

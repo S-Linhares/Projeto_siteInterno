@@ -60,6 +60,26 @@ document.addEventListener("DOMContentLoaded", function(){
         }
     }
 
+    function checked_remetente_terceirizado(){
+        inspetor_radio.checked = false;
+        terceirizado_radio.checked = true;
+    }
+
+    function checked_remetente_inspetor(){
+        inspetor_radio.checked = true;
+        terceirizado_radio.checked = false;
+    }
+
+    function checked_destinatario_terceirizado(){
+        inspetor_radio_d.checked = false;
+        terceirizado_radio_d.checked = true;
+    }
+
+    function checked_destinatario_inspetor(){
+        inspetor_radio_d.checked = true;
+        terceirizado_radio_d.checked = false;
+    }
+
     inspetor_radio.addEventListener("change", disab_remetente);
     terceirizado_radio.addEventListener("change", disab_remetente);
     inspetor_radio_d.addEventListener("change", disab_destinatario);
@@ -70,8 +90,8 @@ document.addEventListener("DOMContentLoaded", function(){
     inspetor_radio.addEventListener("dblclick", unchecked_remetente);
     terceirizado_radio.addEventListener("dblclick", unchecked_remetente);
 
-    disab_remetente();
-    disab_destinatario();
-    unchecked_destinatario();
-    unchecked_remetente();
+    terceirizado_radio.addEventListener("click", checked_remetente_terceirizado);
+    inspetor_radio.addEventListener("click", checked_remetente_inspetor);
+    terceirizado_radio_d.addEventListener("click", checked_destinatario_terceirizado);
+    inspetor_radio_d.addEventListener("click", checked_destinatario_inspetor);
 });
