@@ -79,8 +79,8 @@ tbody > tr:nth-child(2n) {
     cursor: pointer;
 }
 
-.icone_botao_saida {
-    background-image: url(../img/minus32.png);
+.icone_botao_historico {
+    background-image: url(../img/clock32.png);
     background-size: cover;
     width: 32px;
     height: 32px;

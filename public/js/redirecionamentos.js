@@ -9,3 +9,7 @@ function new_user(){
 function exit_ee(){
     window.location.href = "/saida_ee";
 }
+
+function historico_ee(){
+    window.location.href = "/historico_ee"
+}

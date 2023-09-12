@@ -7,6 +7,7 @@ const Terceirizados = require('../models/terceirizados');
 const Recebimento = require('../models/recebimento');
 const Despacho = require('../models/despacho');
 const router = express.Router();
+const { Op } = require("sequelize");
 
 router.get('/', (req, res) => {
     res.render("templates/index");
@@ -48,6 +49,61 @@ router.get('/equipamento_externo', (req, res) => {
         ]
     }).then(function(quadro){
         res.render('templates/equip_externo', {quadro: quadro});
+    });
+});
+
+router.get('/historico_ee', (req, res) => {
+    Post_equip_externo.findAll({
+        order: [['id', 'DESC']],
+        where: {
+            saida: { [Op.ne]: null}, //operador "is not null"
+        },
+        include: [
+            {
+                model: Tecnicos,
+                required: false, //'false' vai forçar uma left join. 'true' vai forçar um inner join
+                attributes: ['nome']
+            },
+            {
+                model: Dispositivo,
+                required: false,
+                attributes: ['nome']
+            },
+            {
+                model: Recebimento,
+                required: false,
+                include: [
+                    {
+                        model: Inspetores,
+                        required: false,
+                        attributes: ['nome']
+                    },
+                    {
+                        model: Terceirizados,
+                        required: false,
+                        attributes: ['nome']
+                    }
+                ]
+            },
+            {
+                model: Despacho,
+                required: false,
+                include: [
+                    {
+                        model: Inspetores,
+                        required: false,
+                        attributes: ['nome']
+                    },
+                    {
+                        model: Terceirizados,
+                        required: false,
+                        attributes: ['nome']
+                    }
+                ]
+            }
+        ]
+    }).then(function(quadro){
+        res.render('templates/historico_ee', {quadro: quadro});
     });
 });
 
