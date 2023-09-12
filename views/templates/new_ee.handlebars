@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/css/styles_new_ee.css">
 <script src="/js/redirecionamentos.js"></script>
+<script src="/js/desab_send.js"></script>
 
 <article>
     <h1>Nova entrada de equipamento externo</h1>
@@ -9,20 +10,23 @@
     <form action="/add_ee" method="POST">
         <div>
             <label>Dispositivo: </label>
-            <input type="text" maxlength="30" class="texto" id="nome_dispositivo" name="nome_dispositivo">
+            <input type="text" maxlength="30" class="texto" id="nome_dispositivo" name="nome_dispositivo" required>
         </div>
         <div>
             <label>Patrimônio: </label>
-            <input type="text" maxlength="10" class="texto" id="patrimonio" name="patrimonio">
+            <input type="text" maxlength="10" class="texto" id="patrimonio" name="patrimonio" required>
         </div>
         <div>
             <label>Remetente: </label>
-            <select name="inspetor" id="inspetor" class="remetente">
+            <input type="radio" id="inspetor_radio" name="inspetor_radio" value="off"> PRF's
+            <input type="radio" id="terceirizado_radio" name="terceirizado_radio" value="off"> Terceirizados
+            <br>
+            <select name="inspetor" id="inspetor" class="remetente" disabled>
                 {{#each inspetores}}
                     <option>{{nome}}</option>
                 {{/each}}
             </select>
-            <select name="terceirizado" id="terceirizado" class="remetente">
+            <select name="terceirizado" id="terceirizado" class="remetente" disabled>
                 {{#each terceirizados}}
                     <option>{{nome}}</option>
                 {{/each}}
@@ -33,7 +37,7 @@
         </div>
         <div>
             <label>Responsável: </label>
-            <select name="responsavel" id="responsavel">
+            <select name="responsavel" id="responsavel" required>
                 {{#each tecnicos}}
                     <option>{{nome}}</option>
                 {{/each}}
@@ -41,7 +45,7 @@
         </div>
         <div>
             <label>Data de entrada: </label>
-            <input type="date" id="entrada" name="entrada">
+            <input type="date" id="entrada" name="entrada" required>
         </div>
         <div>
             <label>Observações: </label>

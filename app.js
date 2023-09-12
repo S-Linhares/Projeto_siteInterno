@@ -36,7 +36,7 @@ app.use('/', paginas); // localhost:8081/exemplo/ ou localhost:8081/exemplo/exem
 
 app.post('/add_ee', (req, res) => {
     async function add_ee(){
-        let entry = null;
+        let recebimento = null;
         try{
             let tecnico = await Tecnicos.findOne({
                 attributes: ['id'],
@@ -54,53 +54,27 @@ app.post('/add_ee', (req, res) => {
                 }
             });
 
-            if(req.body.inspetor !== 'inspetores' && req.body.terceirizado !== 'terceirizados'){
-                let inspetor = await Inspetores.findOne({
+            if(req.body.inspetor_radio == "on"){
+                remetente_mtr = await Inspetores.findOne({
                     attributes: ['matricula'],
                     where: {
                         nome: req.body.inspetor
                     }
                 });
 
-                let terceirizado = await Terceirizados.findOne({
+                recebimento = await Recebimento.create({
+                    remetente_matricula: remetente_mtr.matricula
+                });
+            }else if(req.body.terceirizado_radio == "on"){
+                remetente_cpf = await Terceirizados.findOne({
                     attributes: ['cpf'],
                     where: {
                         nome: req.body.terceirizado
                     }
                 });
 
-                let mtr_i = inspetor.matricula;
-                let cpf_t = terceirizado.cpf;
-
-                entry = await Recebimento.create({
-                    remetente_matricula: mtr_i,
-                    remetente_cpf: cpf_t
-                });
-            }else if(req.body.inspetor !== 'inspetores'){
-                let inspetor = await Inspetores.findOne({
-                    attributes: ['matricula'],
-                    where: {
-                        nome: req.body.inspetor
-                    }
-                });
-
-                let mtr_i = inspetor.matricula;
-
-                entry = await Recebimento.create({
-                    remetente_matricula: mtr_i
-                });
-            }else if(req.body.terceirizado !== 'terceirizados'){
-                let terceirizado = await Terceirizados.findOne({
-                    attributes: ['cpf'],
-                    where: {
-                        nome: req.body.terceirizado
-                    }
-                });
-
-                let cpf_t = terceirizado.cpf;
-
-                entry = await Recebimento.create({
-                    remetente_cpf: cpf_t
+                recebimento = await Recebimento.create({
+                    remetente_cpf: remetente_cpf.cpf
                 });
             }
             
@@ -114,13 +88,13 @@ app.post('/add_ee', (req, res) => {
                 console.log('Não existente... criado!');
             }
             
-            if(entry !== null){
+            if(recebimento !== null){
                 await post_equip_externo.create({
                     entrada: req.body.entrada,
                     obs: req.body.obs,
                     patrimonio_dispositivo: req.body.patrimonio,
                     id_tecnico: id_t,
-                    id_recebimento: entry.id
+                    id_recebimento: recebimento.id
                 });
             }else{
                 await post_equip_externo.create({
