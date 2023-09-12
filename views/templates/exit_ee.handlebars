@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/css/styles_exit_ee.css">
 <link rel="stylesheet" href="/css/styles_new_ee.css">
 <script src="/js/desab_send_address.js"></script>
+<script src="/js/redirecionamentos.js"></script>
 
 <article>
     <h1>Registro de saida de equipamento</h1>
@@ -54,6 +55,7 @@
                 {{/each}}
             </select>
         </div>
+        <br>
         <div>
             <label>Destinatário: </label>
             <input type="radio" id="inspetor_radio_d" name="inspetor_radio_d" value="off"> PRF's
@@ -69,7 +71,9 @@
                     <option>{{nome}}</option>
                 {{/each}}
             </select>
+            <input type="button" class="botao_novo_user" onclick="new_user()">
         </div>
+        <br>
         <div>
             <label>Data de saida: </label>
             <input type="date" id="saida" name="saida" required>

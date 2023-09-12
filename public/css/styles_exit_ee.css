@@ -61,3 +61,17 @@ tbody > tr:nth-child(2n) {
 #terceirizado_radio_d {
     margin-left: 13px;
 }
+
+.botao_novo_user:hover {
+    cursor: pointer;
+}
+
+.botao_novo_user {
+    background-image: url("../img/bluePlus20.png");
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: white;
+    position: relative;
+    top: 5px
+}
