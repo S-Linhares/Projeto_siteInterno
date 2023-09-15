@@ -86,3 +86,12 @@ tbody > tr:nth-child(2n) {
     height: 32px;
     cursor: pointer;
 }
+
+#icone_botao_exit {
+    background-image: url(../img/blueExit20.png);
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
