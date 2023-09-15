@@ -8,6 +8,7 @@ const Recebimento = require('../models/recebimento');
 const Despacho = require('../models/despacho');
 const router = express.Router();
 const { Op } = require("sequelize");
+const Moment = require("moment");
 
 router.get('/', (req, res) => {
     res.render("templates/index");
@@ -53,58 +54,78 @@ router.get('/equipamento_externo', (req, res) => {
 });
 
 router.get('/historico_ee', (req, res) => {
-    Post_equip_externo.findAll({
-        order: [['id', 'DESC']],
-        where: {
-            saida: { [Op.ne]: null}, //operador "is not null"
-        },
-        include: [
-            {
-                model: Tecnicos,
-                required: false, //'false' vai forçar uma left join. 'true' vai forçar um inner join
-                attributes: ['nome']
-            },
-            {
-                model: Dispositivo,
-                required: false,
-                attributes: ['nome']
-            },
-            {
-                model: Recebimento,
-                required: false,
+    async function historico(){
+        try{
+            let quadro = await Post_equip_externo.findAll({
+                order: [['saida', 'DESC']],
+                where: {
+                    saida: { [Op.ne]: null}, //operador "is not null"
+                },
                 include: [
                     {
-                        model: Inspetores,
+                        model: Tecnicos,
+                        required: false, //'false' vai forçar uma left join. 'true' vai forçar um inner join
+                        attributes: ['nome']
+                    },
+                    {
+                        model: Dispositivo,
                         required: false,
                         attributes: ['nome']
                     },
                     {
-                        model: Terceirizados,
+                        model: Recebimento,
                         required: false,
-                        attributes: ['nome']
-                    }
-                ]
-            },
-            {
-                model: Despacho,
-                required: false,
-                include: [
-                    {
-                        model: Inspetores,
-                        required: false,
-                        attributes: ['nome']
+                        include: [
+                            {
+                                model: Inspetores,
+                                required: false,
+                                attributes: ['nome']
+                            },
+                            {
+                                model: Terceirizados,
+                                required: false,
+                                attributes: ['nome']
+                            }
+                        ]
                     },
                     {
-                        model: Terceirizados,
+                        model: Despacho,
                         required: false,
-                        attributes: ['nome']
+                        include: [
+                            {
+                                model: Inspetores,
+                                required: false,
+                                attributes: ['nome']
+                            },
+                            {
+                                model: Terceirizados,
+                                required: false,
+                                attributes: ['nome']
+                            }
+                        ]
                     }
                 ]
-            }
-        ]
-    }).then(function(quadro){
-        res.render('templates/historico_ee', {quadro: quadro});
-    });
+            });
+
+            /*let data_entrada = await Post_equip_externo.findAll({
+                attributes: ['entrada', 'id'],
+                order: [['id', 'DESC']],
+                where: {
+                    saida: { [Op.ne]: null}, //operador "is not null"
+                }
+            });*/
+
+            console.log("QUADRO: ", quadro);
+            //console.log("ENTRADA: ", data_entrada);
+
+            res.render('templates/historico_ee', {quadro: quadro/*, data_entrada: data_entrada*/});
+            
+        }catch(erro){
+            console.log('erro: ', erro);
+        }
+    }
+
+    historico();
 });
 
 router.get('/aniversarios', (req, res) => {
